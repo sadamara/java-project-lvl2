@@ -20,17 +20,14 @@ public class Differ {
         Set<String> allKeys = getAllKeys(map1, map2);
         StringBuilder result = new StringBuilder("{\n");
         for (String key : allKeys) {
-            if(map1.containsKey(key) && !map2.containsKey(key)) {
+            if (map1.containsKey(key) && !map2.containsKey(key)) {
                 result.append("  - " + key + ": " + map1.get(key) + "\n");
-            }
-            else if(!map1.containsKey(key) && map2.containsKey(key)) {
+            } else if (!map1.containsKey(key) && map2.containsKey(key)) {
                 result.append("  + " + key + ": " + map2.get(key) + "\n");
-            }
-            else if(map1.containsKey(key) && map2.containsKey(key)) {
-                if (map1.get(key).equals(map2.get(key))){
+            } else if (map1.containsKey(key) && map2.containsKey(key)) {
+                if (map1.get(key).equals(map2.get(key))) {
                     result.append("    " + key + ": " + map1.get(key) + "\n");
-                }
-                else {
+                } else {
                     result.append("  - " + key + ": " + map1.get(key) + "\n");
                     result.append("  + " + key + ": " + map2.get(key) + "\n");
                 }
@@ -38,17 +35,17 @@ public class Differ {
         }
         result.append("}");
         return result.toString();
-        }
+    }
 
 
     public static Map<String, Object> parse(String string) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         Map<String, Object> map
-                = objectMapper.readValue(string, new TypeReference<Map<String,Object>>(){});
+                = objectMapper.readValue(string, new TypeReference<Map<String, Object>>() { });
         return map;
     }
 
-    public static Set<String> getAllKeys (Map<String, Object> map1, Map<String, Object> map2) {
+    public static Set<String> getAllKeys(Map<String, Object> map1, Map<String, Object> map2) {
         TreeSet<String> allKeys = new TreeSet<>(map1.keySet());
         allKeys.addAll(map2.keySet());
         return allKeys;
